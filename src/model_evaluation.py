@@ -33,7 +33,7 @@ def evaluate_model(model, X_test, y_test, class_names=None, output_dir="artifact
     fig, ax = plt.subplots(figsize=(8, 6))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=class_names)
     disp.plot(ax=ax, colorbar=True, cmap="Blues")
-    ax.set_title("Confusion Matrix - Wine Classification")
+    ax.set_title("Confusion Matrix - Breast Cancer Classification")
     plt.tight_layout()
     cm_path = os.path.join(output_dir, "confusion_matrix.png")
     plt.savefig(cm_path, dpi=120)

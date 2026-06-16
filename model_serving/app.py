@@ -18,8 +18,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title="Wine Classification API",
-    description="ML Model Serving API for Wine Classification using MLflow",
+    title="Breast Cancer Classification API",
+    description="ML Model Serving API for Breast Cancer Classification using MLflow",
     version="1.0.0"
 )
 
@@ -53,21 +53,29 @@ MODEL_INFO = Gauge(
 model = None
 model_name = "unknown"
 
-CLASS_NAMES = {0: "class_0", 1: "class_1", 2: "class_2"}
+CLASS_NAMES = {0: "malignant", 1: "benign"}
 FEATURE_NAMES = [
-    "alcohol", "malic_acid", "ash", "alcalinity_of_ash", "magnesium",
-    "total_phenols", "flavanoids", "nonflavanoid_phenols", "proanthocyanins",
-    "color_intensity", "hue", "od280_od315_of_diluted_wines", "proline"
+    "mean radius", "mean texture", "mean perimeter", "mean area",
+    "mean smoothness", "mean compactness", "mean concavity",
+    "mean concave points", "mean symmetry", "mean fractal dimension",
+    "radius error", "texture error", "perimeter error", "area error",
+    "smoothness error", "compactness error", "concavity error",
+    "concave points error", "symmetry error", "fractal dimension error",
+    "worst radius", "worst texture", "worst perimeter", "worst area",
+    "worst smoothness", "worst compactness", "worst concavity",
+    "worst concave points", "worst symmetry", "worst fractal dimension"
 ]
 
 
 class PredictionInput(BaseModel):
     features: List[float] = Field(
         ...,
-        min_items=13,
-        max_items=13,
-        description="List of 13 wine features",
-        example=[13.2, 1.78, 2.14, 11.2, 100.0, 2.65, 2.76, 0.26, 1.28, 4.38, 1.05, 3.4, 1050.0]
+        min_items=30,
+        max_items=30,
+        description="List of 30 breast cancer features",
+        example=[17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.2419, 0.07871,
+                 1.095, 0.9053, 8.589, 153.4, 0.006399, 0.04904, 0.05373, 0.01587, 0.03003, 0.006193,
+                 25.38, 17.33, 184.6, 2019.0, 0.1622, 0.6656, 0.7119, 0.2654, 0.4601, 0.1189]
     )
 
 
@@ -98,7 +106,7 @@ async def startup_event():
         # Try to find latest run and load from there
         try:
             client = mlflow.tracking.MlflowClient()
-            experiment = client.get_experiment_by_name("wine-classification-experiment")
+            experiment = client.get_experiment_by_name("breast-cancer-classification-experiment")
             if experiment:
                 runs = client.search_runs(
                     experiment.experiment_id,
@@ -127,7 +135,7 @@ async def startup_event():
 @app.get("/", tags=["Root"])
 async def root():
     return {
-        "message": "Wine Classification API",
+        "message": "Breast Cancer Classification API",
         "version": "1.0.0",
         "endpoints": ["/health", "/predict", "/metrics", "/docs"]
     }

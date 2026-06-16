@@ -16,7 +16,7 @@ from src.model_evaluation import evaluate_model, log_evaluation_artifacts
 
 def main():
     print("=" * 60)
-    print("Wine Classification ML Pipeline")
+    print("Breast Cancer Classification ML Pipeline")
     print("=" * 60)
 
     # 1. Setup MLflow

@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-EXPERIMENT_NAME = "wine-classification-experiment"
+EXPERIMENT_NAME = "breast-cancer-classification-experiment"
 
 
 def setup_mlflow(tracking_uri="sqlite:///mlflow.db"):
@@ -54,7 +54,7 @@ def train_logistic_regression(X_train, y_train, X_test, y_test):
         for k, v in metrics.items():
             mlflow.log_metric(k, v)
 
-        mlflow.sklearn.log_model(model, "model", registered_model_name="wine-classifier-lr")
+        mlflow.sklearn.log_model(model, "model", registered_model_name="breast-cancer-classifier-lr")
 
         run_id = mlflow.active_run().info.run_id
         print(f"[LR] accuracy={metrics['accuracy']:.4f}, f1={metrics['f1_weighted']:.4f}, run_id={run_id}")
@@ -88,7 +88,7 @@ def train_random_forest(X_train, y_train, X_test, y_test):
             json.dump(importances, f, indent=2)
         mlflow.log_artifact("feature_importances.json")
 
-        mlflow.sklearn.log_model(model, "model", registered_model_name="wine-classifier-rf")
+        mlflow.sklearn.log_model(model, "model", registered_model_name="breast-cancer-classifier-rf")
 
         run_id = mlflow.active_run().info.run_id
         print(f"[RF] accuracy={metrics['accuracy']:.4f}, f1={metrics['f1_weighted']:.4f}, run_id={run_id}")
@@ -114,7 +114,7 @@ def train_gradient_boosting(X_train, y_train, X_test, y_test):
         for k, v in metrics.items():
             mlflow.log_metric(k, v)
 
-        mlflow.sklearn.log_model(model, "model", registered_model_name="wine-classifier-gb")
+        mlflow.sklearn.log_model(model, "model", registered_model_name="breast-cancer-classifier-gb")
 
         run_id = mlflow.active_run().info.run_id
         print(f"[GB] accuracy={metrics['accuracy']:.4f}, f1={metrics['f1_weighted']:.4f}, run_id={run_id}")

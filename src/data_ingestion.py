@@ -1,19 +1,19 @@
 import pandas as pd
 import numpy as np
 import os
-from sklearn.datasets import load_wine
+from sklearn.datasets import load_breast_cancer
 
 
 def load_dataset():
-    """Load wine dataset from sklearn and return as DataFrame."""
-    wine = load_wine()
-    df = pd.DataFrame(wine.data, columns=wine.feature_names)
-    df['target'] = wine.target
-    df['target_name'] = df['target'].map({0: 'class_0', 1: 'class_1', 2: 'class_2'})
-    return df, wine.target_names.tolist()
+    """Load breast cancer dataset from sklearn and return as DataFrame."""
+    bc = load_breast_cancer()
+    df = pd.DataFrame(bc.data, columns=bc.feature_names)
+    df['target'] = bc.target
+    df['target_name'] = df['target'].map({0: 'malignant', 1: 'benign'})
+    return df, bc.target_names.tolist()
 
 
-def save_dataset(df, path='data/wine_data.csv'):
+def save_dataset(df, path='data/breast_cancer_data.csv'):
     """Save dataset to CSV file."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     df.to_csv(path, index=False)
