@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Prometheus binary (terlalu besar untuk GitHub)
+monitoring/prometheus-windows/
+
+# Generated data (bisa di-generate ulang)
+data/
+
+# MLflow database & runs (optional: bisa di-include jika mau)
+mlflow.db
+mlruns/
+mlartifacts/
+
+# Artifacts generated dari training
+artifacts/
+feature_importances.json
+
+# Screenshot Dicoding (bukan bagian kode)
+Kriteria.png
+Pengantar.png
+Ketentuan Penilaian.png
+Tips dan Trik.png
+Lainnya.png
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+# Prometheus binary ZIP
+monitoring/prometheus-2.47.0.windows-amd64.zip
+

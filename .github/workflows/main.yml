@@ -1,0 +1,83 @@
+﻿name: ML Training CI - Wine Classification
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  MLFLOW_TRACKING_URI: sqlite:///mlflow.db
+  EXPERIMENT_NAME: wine-classification-experiment
+
+jobs:
+  train-and-evaluate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify installation
+        run: |
+          python -c "import mlflow; print(f'MLflow version: {mlflow.__version__}')"
+          python -c "import sklearn; print(f'Scikit-learn version: {sklearn.__version__}')"
+
+      - name: Run unit tests
+        run: |
+          if [ -d "tests" ]; then
+            python -m pytest tests/ -v --tb=short
+          else
+            echo "No tests directory found, skipping"
+          fi
+
+      - name: Run ML training pipeline
+        run: |
+          python main.py
+
+      - name: Verify MLflow artifacts
+        run: |
+          python -c "
+          import mlflow
+          mlflow.set_tracking_uri('sqlite:///mlflow.db')
+          client = mlflow.tracking.MlflowClient()
+          experiment = client.get_experiment_by_name('wine-classification-experiment')
+          if experiment:
+              runs = client.search_runs(experiment.experiment_id)
+              print(f'Total runs: {len(runs)}')
+              for run in runs:
+                  acc = run.data.metrics.get('accuracy', 'N/A')
+                  print(f'  Run {run.info.run_name}: accuracy={acc}')
+          else:
+              print('Experiment not found')
+          "
+
+      - name: Upload MLflow artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: mlflow-experiment-artifacts
+          path: |
+            mlruns/
+            mlartifacts/
+            artifacts/
+          retention-days: 30
+
+      - name: Upload training summary
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: training-summary
+          path: artifacts/training_summary.json
+          if-no-files-found: warn
