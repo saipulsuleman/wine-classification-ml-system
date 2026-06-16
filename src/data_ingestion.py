@@ -15,7 +15,9 @@ def load_dataset():
 
 def save_dataset(df, path='data/breast_cancer_data.csv'):
     """Save dataset to CSV file."""
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    dir_name = os.path.dirname(path)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
     df.to_csv(path, index=False)
     print(f"Dataset saved to {path}")
     return path

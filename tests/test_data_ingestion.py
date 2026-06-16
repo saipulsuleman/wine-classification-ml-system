@@ -6,7 +6,7 @@ import os
 def test_load_dataset_shape():
     from src.data_ingestion import load_dataset
     df, target_names = load_dataset()
-    assert df.shape == (178, 15)
+    assert df.shape == (569, 32)
 
 
 def test_load_dataset_columns():
@@ -19,30 +19,30 @@ def test_load_dataset_columns():
 def test_load_dataset_target_names():
     from src.data_ingestion import load_dataset
     _, target_names = load_dataset()
-    assert len(target_names) == 3
-    assert 'class_0' in target_names
+    assert len(target_names) == 2
+    assert 'malignant' in target_names
 
 
 def test_load_dataset_target_mapping():
     from src.data_ingestion import load_dataset
     df, _ = load_dataset()
-    assert set(df['target'].unique()) == {0, 1, 2}
-    assert set(df['target_name'].unique()) == {'class_0', 'class_1', 'class_2'}
+    assert set(df['target'].unique()) == {0, 1}
+    assert set(df['target_name'].unique()) == {'malignant', 'benign'}
 
 
-def test_save_dataset_creates_file(tmp_path, sample_wine_df):
+def test_save_dataset_creates_file(tmp_path, sample_bc_df):
     from src.data_ingestion import save_dataset
     out_path = str(tmp_path / "output.csv")
-    save_dataset(sample_wine_df, path=out_path)
+    save_dataset(sample_bc_df, path=out_path)
     assert os.path.exists(out_path)
 
 
-def test_save_dataset_readable(tmp_path, sample_wine_df):
+def test_save_dataset_readable(tmp_path, sample_bc_df):
     from src.data_ingestion import save_dataset
     out_path = str(tmp_path / "output.csv")
-    save_dataset(sample_wine_df, path=out_path)
+    save_dataset(sample_bc_df, path=out_path)
     loaded = pd.read_csv(out_path)
-    assert loaded.shape == sample_wine_df.shape
+    assert loaded.shape == sample_bc_df.shape
 
 
 def test_save_dataset_creates_directory(tmp_path):

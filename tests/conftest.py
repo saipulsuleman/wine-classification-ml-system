@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -9,34 +9,51 @@ from unittest.mock import MagicMock, patch
 
 
 @pytest.fixture
-def sample_wine_df():
+def sample_bc_df():
     np.random.seed(42)
     n = 30
     data = {
-        'alcohol': np.random.uniform(11, 15, n),
-        'malic_acid': np.random.uniform(0.7, 5.8, n),
-        'ash': np.random.uniform(1.4, 3.2, n),
-        'alcalinity_of_ash': np.random.uniform(10, 30, n),
-        'magnesium': np.random.uniform(70, 162, n),
-        'total_phenols': np.random.uniform(0.9, 3.9, n),
-        'flavanoids': np.random.uniform(0.3, 5.1, n),
-        'nonflavanoid_phenols': np.random.uniform(0.1, 0.7, n),
-        'proanthocyanins': np.random.uniform(0.4, 3.6, n),
-        'color_intensity': np.random.uniform(1.3, 13, n),
-        'hue': np.random.uniform(0.5, 1.7, n),
-        'od280_od315_of_diluted_wines': np.random.uniform(1.3, 4.0, n),
-        'proline': np.random.uniform(278, 1680, n),
-        'target': [0] * 10 + [1] * 10 + [2] * 10,
-        'target_name': ['class_0'] * 10 + ['class_1'] * 10 + ['class_2'] * 10,
+        'mean radius': np.random.uniform(6.9, 28.1, n),
+        'mean texture': np.random.uniform(9.7, 39.3, n),
+        'mean perimeter': np.random.uniform(43.8, 188.5, n),
+        'mean area': np.random.uniform(143.5, 2501.0, n),
+        'mean smoothness': np.random.uniform(0.05, 0.16, n),
+        'mean compactness': np.random.uniform(0.02, 0.35, n),
+        'mean concavity': np.random.uniform(0.0, 0.43, n),
+        'mean concave points': np.random.uniform(0.0, 0.20, n),
+        'mean symmetry': np.random.uniform(0.11, 0.30, n),
+        'mean fractal dimension': np.random.uniform(0.05, 0.10, n),
+        'radius error': np.random.uniform(0.11, 2.87, n),
+        'texture error': np.random.uniform(0.36, 4.88, n),
+        'perimeter error': np.random.uniform(0.76, 21.98, n),
+        'area error': np.random.uniform(6.80, 542.2, n),
+        'smoothness error': np.random.uniform(0.001, 0.031, n),
+        'compactness error': np.random.uniform(0.002, 0.135, n),
+        'concavity error': np.random.uniform(0.0, 0.396, n),
+        'concave points error': np.random.uniform(0.0, 0.053, n),
+        'symmetry error': np.random.uniform(0.008, 0.079, n),
+        'fractal dimension error': np.random.uniform(0.001, 0.03, n),
+        'worst radius': np.random.uniform(7.9, 36.0, n),
+        'worst texture': np.random.uniform(12.0, 49.5, n),
+        'worst perimeter': np.random.uniform(50.4, 251.2, n),
+        'worst area': np.random.uniform(185.2, 4254.0, n),
+        'worst smoothness': np.random.uniform(0.07, 0.22, n),
+        'worst compactness': np.random.uniform(0.03, 1.06, n),
+        'worst concavity': np.random.uniform(0.0, 1.25, n),
+        'worst concave points': np.random.uniform(0.0, 0.29, n),
+        'worst symmetry': np.random.uniform(0.16, 0.66, n),
+        'worst fractal dimension': np.random.uniform(0.055, 0.208, n),
+        'target': [0] * 15 + [1] * 15,
+        'target_name': ['malignant'] * 15 + ['benign'] * 15,
     }
     return pd.DataFrame(data)
 
 
 @pytest.fixture
-def df_with_missing(sample_wine_df):
-    df = sample_wine_df.copy()
-    df.loc[0, 'alcohol'] = np.nan
-    df.loc[5, 'malic_acid'] = np.nan
+def df_with_missing(sample_bc_df):
+    df = sample_bc_df.copy()
+    df.loc[0, 'mean radius'] = np.nan
+    df.loc[5, 'mean texture'] = np.nan
     return df
 
 
@@ -52,11 +69,11 @@ def mock_mlflow():
 
 
 @pytest.fixture
-def trained_lr_model(sample_wine_df):
+def trained_lr_model(sample_bc_df):
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
-    X = sample_wine_df.drop(columns=['target', 'target_name'])
-    y = sample_wine_df['target']
+    X = sample_bc_df.drop(columns=['target', 'target_name'])
+    y = sample_bc_df['target']
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     model = LogisticRegression(max_iter=200, random_state=42)

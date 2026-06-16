@@ -1,4 +1,4 @@
-import sys
+﻿import sys
 import os
 import mlflow
 import json
@@ -16,7 +16,7 @@ from src.model_evaluation import evaluate_model, log_evaluation_artifacts
 
 def main():
     print("=" * 60)
-    print("Wine Classification - Model Training Pipeline")
+    print("Breast Cancer Classification - Model Training Pipeline")
     print("=" * 60)
 
     setup_mlflow()

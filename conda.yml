@@ -1,4 +1,4 @@
-﻿name: wine-classification
+﻿name: breast-cancer-classification
 channels:
   - defaults
   - conda-forge

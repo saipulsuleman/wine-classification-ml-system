@@ -1,5 +1,5 @@
 """
-Prometheus metrics definitions for Wine Classification API.
+Prometheus metrics definitions for Breast Cancer Classification API.
 These counters and histograms are exposed via the /metrics endpoint.
 """
 from prometheus_client import Counter, Histogram, Gauge

@@ -1,4 +1,4 @@
-import sys
+﻿import sys
 import os
 import mlflow
 import mlflow.sklearn
@@ -44,14 +44,14 @@ def tune_logistic_regression(X_train, y_train, X_test, y_test):
         mlflow.log_param("best_cv_score", round(best_cv_score, 4))
         for k, v in metrics.items():
             mlflow.log_metric(k, v)
-        mlflow.sklearn.log_model(best_model, "model", registered_model_name="wine-classifier-lr-tuned")
+        mlflow.sklearn.log_model(best_model, "model", registered_model_name="breast-cancer-classifier-lr-tuned")
 
     return best_model, metrics, best_params
 
 
 def main():
     print("=" * 60)
-    print("Wine Classification - Hyperparameter Tuning")
+    print("Breast Cancer Classification - Hyperparameter Tuning")
     print("=" * 60)
 
     setup_mlflow()

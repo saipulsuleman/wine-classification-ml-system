@@ -1,5 +1,5 @@
 @echo off
-echo ===== Wine Classification ML System =====
+echo ===== Breast Cancer Classification ML System =====
 echo.
 
 echo [1] Starting MLflow UI di http://localhost:5000 ...
@@ -27,6 +27,6 @@ echo   Metrics:       http://localhost:8000/metrics
 echo   Prometheus:    http://localhost:9090
 echo   Grafana:       http://localhost:3000
 echo   Grafana login: admin / admin123
-echo   Dashboard:     http://localhost:3000/d/saipulkarimsuleman-wine-ml
+echo   Dashboard:     http://localhost:3000/d/saipulkarimsuleman-bc-ml
 echo.
 pause

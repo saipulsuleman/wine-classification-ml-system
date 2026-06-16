@@ -4,9 +4,9 @@ from unittest.mock import MagicMock
 
 
 @pytest.fixture
-def train_test_data(sample_wine_df):
+def train_test_data(sample_bc_df):
     from src.data_preprocessing import preprocess_data
-    return preprocess_data(sample_wine_df.copy(), test_size=0.3, random_state=42)
+    return preprocess_data(sample_bc_df.copy(), test_size=0.3, random_state=42)
 
 
 def test_compute_metrics_returns_all_keys():

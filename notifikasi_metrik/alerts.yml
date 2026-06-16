@@ -20,10 +20,10 @@
           description: "95th percentile latency is {{ $value }} seconds"
 
       - alert: APIDown
-        expr: up{job="wine-classification-api"} == 0
+        expr: up{job="breast-cancer-api"} == 0
         for: 30s
         labels:
           severity: critical
         annotations:
           summary: "ML API is down"
-          description: "Wine Classification API has been down for more than 30 seconds"
+          description: "Breast Cancer API has been down for more than 30 seconds"

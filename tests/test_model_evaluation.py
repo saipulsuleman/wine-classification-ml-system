@@ -31,10 +31,10 @@ def test_evaluate_model_accuracy_range(trained_lr_model, tmp_path):
 def test_evaluate_model_with_class_names(trained_lr_model, tmp_path):
     from src.model_evaluation import evaluate_model
     model, scaler, X_test, y_test = trained_lr_model
-    class_names = ['class_0', 'class_1', 'class_2']
+    class_names = ['malignant', 'benign']
     result = evaluate_model(model, X_test, y_test,
                             class_names=class_names, output_dir=str(tmp_path))
-    assert 'class_0' in result['classification_report']
+    assert 'malignant' in result['classification_report']
 
 
 def test_log_evaluation_artifacts_with_active_run(tmp_path):
