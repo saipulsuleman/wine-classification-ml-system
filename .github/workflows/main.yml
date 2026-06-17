@@ -45,7 +45,7 @@ jobs:
 
       - name: Run ML training pipeline
         run: |
-          mlflow run . --env-manager=local
+          mlflow run MLProject/ --env-manager=local
 
       - name: Verify MLflow artifacts
         run: |
