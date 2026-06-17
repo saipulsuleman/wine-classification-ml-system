@@ -37,7 +37,9 @@ def load_and_preprocess():
 
 
 def setup_mlflow():
-    mlflow.set_tracking_uri(TRACKING_URI)
+    tracking_uri = os.environ.get('MLFLOW_TRACKING_URI') or TRACKING_URI
+    os.environ.pop('MLFLOW_RUN_ID', None)
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment(EXPERIMENT_NAME)
 
 

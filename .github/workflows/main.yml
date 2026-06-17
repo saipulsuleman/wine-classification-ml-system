@@ -45,7 +45,7 @@ jobs:
 
       - name: Run ML training pipeline
         run: |
-          mlflow run MLProject/ --env-manager=local
+          MLFLOW_TRACKING_URI="sqlite:///$PWD/mlflow.db" mlflow run MLProject/ --env-manager=local
 
       - name: Verify MLflow artifacts
         run: |
