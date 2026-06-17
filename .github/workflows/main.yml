@@ -45,7 +45,7 @@ jobs:
 
       - name: Run ML training pipeline
         run: |
-          python main.py
+          mlflow run . --env-manager=local
 
       - name: Verify MLflow artifacts
         run: |
