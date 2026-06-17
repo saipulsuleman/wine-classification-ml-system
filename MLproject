@@ -1,0 +1,6 @@
+name: breast-cancer-classification
+conda_env: mlflow_env/conda.yaml
+
+entry_points:
+  main:
+    command: "python main.py"
